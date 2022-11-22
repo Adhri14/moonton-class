@@ -113,4 +113,14 @@ class SubscriptionPlanController extends Controller
             'message' => 'Payment success'
         ]);
     }
+
+    public function paymentSuccess()
+    {
+        return Inertia::render("User/Payment/Status/Success");
+    }
+
+    public function paymentFailed()
+    {
+        return Inertia::render("User/Payment/Status/Failed");
+    }
 }

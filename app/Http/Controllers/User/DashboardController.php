@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
 
         $movieFeatured = Movies::whereIsFeatured(true)->get();
-        $movie = Movies::all();
+        $movie = Movies::whereIsFeatured(false)->get();
 
         $data = [
             "featureMovie" => $movieFeatured,

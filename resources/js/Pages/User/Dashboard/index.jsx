@@ -2,6 +2,7 @@ import CardMovie from "@/Components/CardMovie";
 import Title from "@/Components/Title";
 import Authenticated from "@/Layouts/Authenticated/index";
 import { Head } from "@inertiajs/inertia-react";
+import { Fragment } from "react";
 import Flickity from "react-flickity-component";
 
 export default function Dashboard(props) {
@@ -17,6 +18,8 @@ export default function Dashboard(props) {
 
     const movieFeatured = props.featureMovie;
     const movieBrowse = props.browse;
+
+    console.log("browse : ", movieBrowse);
 
     return (
         <Authenticated auth={props} isTopbar>
@@ -39,23 +42,30 @@ export default function Dashboard(props) {
                 ))}
             </Flickity>
 
-            <Title title="Browse" className="mt-10" />
-            <Flickity
-                className="gap-[30px] overflow-x-hidden ring-transparent outline-none"
-                elementType="div"
-                options={options}
-            >
-                {movieBrowse.map((item) => (
-                    <CardMovie
-                        key={item.id.toString()}
-                        title={item.name}
-                        category={item.category}
-                        href={route("user.dashboard.movie.show", item.slug)}
-                        imageSource={`/storage/${item.thumbnail}`}
-                        variant="browse"
-                    />
-                ))}
-            </Flickity>
+            {movieBrowse.length > 0 && (
+                <Fragment>
+                    <Title title="Browse" className="mt-10" />
+                    <Flickity
+                        className="gap-[30px] overflow-x-hidden ring-transparent outline-none"
+                        elementType="div"
+                        options={options}
+                    >
+                        {movieBrowse.map((item) => (
+                            <CardMovie
+                                key={item.id.toString()}
+                                title={item.name}
+                                category={item.category}
+                                href={route(
+                                    "user.dashboard.movie.show",
+                                    item.slug
+                                )}
+                                imageSource={`/storage/${item.thumbnail}`}
+                                variant="browse"
+                            />
+                        ))}
+                    </Flickity>
+                </Fragment>
+            )}
         </Authenticated>
     );
 }
